@@ -11,9 +11,10 @@ FONT_NAME = "arial.ttf"
 WATERMARK_ANGLE = -10
 DEBUG=True
 WATERMARK_SCALE_IMAGE=2
+MIN_FONT_SIZE=10
 
 def guess_font_size(inputImage: Image) -> int:
-    return math.floor(inputImage.size[1] / FONT_FACTOR)
+    return max(MIN_FONT_SIZE, math.floor(inputImage.size[1] / FONT_FACTOR))
 
 
 def guess_amount_watermarks(inputImage: Image) -> int:
