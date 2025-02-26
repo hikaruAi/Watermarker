@@ -1,24 +1,29 @@
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from PIL import ImageChops
 import math, sys, random, time
 
 WATERMARK_OPACITY = 0.1
 
-AMOUNT_FACTOR = 20
-FONT_FACTOR = 80
+AMOUNT_FACTOR = 10
+FONT_FACTOR = 90
 FONT_NAME = "arial.ttf"
 WATERMARK_ANGLE = -10
 DEBUG=True
 WATERMARK_SCALE_IMAGE=2
-MIN_FONT_SIZE=10
+MIN_FONT_SIZE=9
 
 def guess_font_size(inputImage: Image) -> int:
-    return max(MIN_FONT_SIZE, math.floor(inputImage.size[1] / FONT_FACTOR))
+    s=max(MIN_FONT_SIZE, math.floor(inputImage.size[1] / FONT_FACTOR))
+    print("Font Size: ",s)
+    return s
 
 
 def guess_amount_watermarks(inputImage: Image) -> int:
-    return math.floor(inputImage.size[1]*WATERMARK_SCALE_IMAGE / AMOUNT_FACTOR)
+    a=math.floor(inputImage.size[1]*WATERMARK_SCALE_IMAGE / AMOUNT_FACTOR)
+    print("Amount: ",a)
+    return a
 
 
 def get_watermarks_positions(inputImage: Image, number_marks: int) -> list:
@@ -38,18 +43,18 @@ def get_watermarks_positions(inputImage: Image, number_marks: int) -> list:
     return centers
 
 
-def create_watermarks(text: str, size_x: int, size_y: int, centers: list, fontName: str, font_size: int,
+def create_watermarks(text: str, size_x: int, size_y: int, centers: list, fontName: str, text_font_size: int,
                       color=(255, 255, 255), opacity=0.2):
     empty_watermark_image = Image.new("RGBA", (size_x * WATERMARK_SCALE_IMAGE, size_y * WATERMARK_SCALE_IMAGE), (0, 0, 0, 0))
     draw = ImageDraw.Draw(empty_watermark_image, "RGBA")
-    font_object = ImageFont.truetype(fontName, font_size)
+    font_object = ImageFont.truetype(fontName, text_font_size)
     opacity_hex = int(opacity * 255)
     for c in centers:
         if random.choice((True,False, True, True)):
-            draw.text(c, text, font=font_object, fill=(color[0], color[1], color[2], opacity_hex))
+            draw.text(c, text, font=font_object, fill=(color[0], color[1], color[2], opacity_hex),)
         else:
-            t= time.strftime("%d-%m-%y,%H:%M:%S")
-            draw.text(c, t, font=font_object, fill=(color[0], color[1], color[2], opacity_hex))
+            t= time.strftime("%d%m%y%H%M")
+            draw.text(c, t, font=font_object, fill=(color[0], color[1], color[2], opacity_hex),font_size=text_font_size)
 
     empty_watermark_image.save("temp_watermark.png", "PNG")
     return empty_watermark_image
