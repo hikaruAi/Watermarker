@@ -1,12 +1,12 @@
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
-import math, sys
+import math, sys, random, time
 
 WATERMARK_OPACITY = 0.1
 
-AMOUNT_FACTOR = 30
-FONT_FACTOR = 70
+AMOUNT_FACTOR = 20
+FONT_FACTOR = 80
 FONT_NAME = "arial.ttf"
 WATERMARK_ANGLE = -10
 DEBUG=True
@@ -18,13 +18,13 @@ def guess_font_size(inputImage: Image) -> int:
 
 
 def guess_amount_watermarks(inputImage: Image) -> int:
-    return math.floor(inputImage.size[1] / AMOUNT_FACTOR)
+    return math.floor(inputImage.size[1]*WATERMARK_SCALE_IMAGE / AMOUNT_FACTOR)
 
 
 def get_watermarks_positions(inputImage: Image, number_marks: int) -> list:
     w, h = inputImage.size
     squareRoot = math.floor(math.sqrt(number_marks))
-    blockSize_x, blockSize_y = math.floor(w * WATERMARK_SCALE_IMAGE / squareRoot), math.floor(h/ squareRoot)
+    blockSize_x, blockSize_y = math.floor(w * WATERMARK_SCALE_IMAGE / squareRoot), math.floor(h* WATERMARK_SCALE_IMAGE/ squareRoot)
     squares = []
     centers = []
     for i in range(squareRoot):
@@ -32,7 +32,7 @@ def get_watermarks_positions(inputImage: Image, number_marks: int) -> list:
             squares.append([i * blockSize_x, j * blockSize_y])
     for s in range(number_marks):
         try:
-            centers.append([squares[s][0] + (blockSize_x / 2), squares[s][1] + (blockSize_y / 2)])
+            centers.append([squares[s][0] + (blockSize_x / random.randrange(1,2)), squares[s][1] + (blockSize_y /random.randrange(1,4))])
         except Exception:
             pass
     return centers
@@ -40,12 +40,16 @@ def get_watermarks_positions(inputImage: Image, number_marks: int) -> list:
 
 def create_watermarks(text: str, size_x: int, size_y: int, centers: list, fontName: str, font_size: int,
                       color=(255, 255, 255), opacity=0.2):
-    empty_watermark_image = Image.new("RGBA", (size_x * WATERMARK_SCALE_IMAGE, size_y), (0, 0, 0, 0))
+    empty_watermark_image = Image.new("RGBA", (size_x * WATERMARK_SCALE_IMAGE, size_y * WATERMARK_SCALE_IMAGE), (0, 0, 0, 0))
     draw = ImageDraw.Draw(empty_watermark_image, "RGBA")
     font_object = ImageFont.truetype(fontName, font_size)
     opacity_hex = int(opacity * 255)
     for c in centers:
-        draw.text(c, text, font=font_object, fill=(color[0], color[1], color[2], opacity_hex))
+        if random.choice((True,False, True, True)):
+            draw.text(c, text, font=font_object, fill=(color[0], color[1], color[2], opacity_hex))
+        else:
+            t= time.strftime("%d-%m-%y,%H:%M:%S")
+            draw.text(c, t, font=font_object, fill=(color[0], color[1], color[2], opacity_hex))
 
     empty_watermark_image.save("temp_watermark.png", "PNG")
     return empty_watermark_image
@@ -55,8 +59,8 @@ def blend_watermark(original: Image, watermark: Image) -> Image:
     copy = original.copy()
     rotated = watermark.rotate(WATERMARK_ANGLE, resample=Image.Resampling.BICUBIC, expand=True)
     rotated.save("rotated.png","PNG")
-    pad=copy.size[0]/4
-    croped= rotated.crop((pad,0,copy.size[0]+pad,copy.size[1]))
+    pad=copy.size[0]*2/(WATERMARK_SCALE_IMAGE)
+    croped= rotated.crop((pad,pad,copy.size[0] +pad ,copy.size[1] + pad))
     croped.save("croped.png", "PNG")
     return Image.alpha_composite(copy, croped)
 
