@@ -1,4 +1,5 @@
 from watermarker import *
+import json
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
@@ -16,5 +17,5 @@ if __name__ == '__main__':
     options = WatermarkConfig()
     options.WATERMARK_OPACITY = float(input("Opacity 0.01-1.0 :"))
     options.DENSITY = int(input("Density 10-100 :"))
-    options.FONT_SIZE_FACTOR = int(input("Size 10-100 :"))
+    options.FONT_SCALE = int(input("Size 10-100 :"))
     make_watermark(file_name, textToPut, options)

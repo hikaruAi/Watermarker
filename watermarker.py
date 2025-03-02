@@ -9,7 +9,7 @@ class WatermarkConfig:
     def __init__(self):
         self.WATERMARK_OPACITY = 0.1
         self.DENSITY = 90
-        self.FONT_SIZE_FACTOR = 90
+        self.FONT_SCALE = 90
         self.FONT_NAME = "arial.ttf"
         self.FONT_COLOR = (255, 255, 255)
         self.WATERMARK_ANGLE = -10
@@ -70,7 +70,7 @@ def make_watermark(file_name: str, text: str, options: WatermarkConfig) -> Image
     input_img = Image.open(file_name).convert("RGBA")
 
     # FONT SIZE
-    fontSize = max(options.MIN_FONT_SIZE, math.floor(input_img.size[1] / options.FONT_SIZE_FACTOR))
+    fontSize = max(options.MIN_FONT_SIZE, math.floor(input_img.size[1] / options.FONT_SCALE))
     print("Font Size: ", fontSize)
 
     # Amount of watermarks
