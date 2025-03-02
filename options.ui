@@ -236,6 +236,23 @@
     <property name="currentText">
      <string>Arial</string>
     </property>
+    <property name="placeholderText">
+     <string/>
+    </property>
+    <property name="duplicatesEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="modelColumn">
+     <number>0</number>
+    </property>
+    <property name="fontFilters">
+     <set>QFontComboBox::FontFilter::AllFonts</set>
+    </property>
+    <property name="currentFont">
+     <font>
+      <family>Arial</family>
+     </font>
+    </property>
    </widget>
    <widget class="QLabel" name="color_label">
     <property name="geometry">
@@ -264,6 +281,9 @@
     </property>
     <property name="text">
      <string>255,255,255</string>
+    </property>
+    <property name="maxLength">
+     <number>11</number>
     </property>
     <property name="alignment">
      <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -375,6 +395,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="text">
+     <string>90</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="angle_edit">
     <property name="geometry">
@@ -384,6 +407,9 @@
       <width>31</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>-10</string>
     </property>
    </widget>
   </widget>
