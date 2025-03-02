@@ -18,7 +18,7 @@ class WatermarkConfig:
         self.MIN_FONT_SIZE = 9
 
 
-def get_watermarks_positions(inputImage: Image, number_marks: int, scale_multiplier) -> list:
+def _get_watermarks_positions(inputImage: Image, number_marks: int, scale_multiplier) -> list:
     w, h = inputImage.size
     squareRoot = math.floor(math.sqrt(number_marks))
     blockSize_x = math.floor(w * scale_multiplier / squareRoot)
@@ -38,8 +38,8 @@ def get_watermarks_positions(inputImage: Image, number_marks: int, scale_multipl
     return centers
 
 
-def draw_temp_watermark(text: str, size_x: int, size_y: int, centers: list, fontName: str, text_font_size: int,
-                        color=(255, 255, 255), opacity=0.2, scale_multiplier=2):
+def _draw_temp_watermark(text: str, size_x: int, size_y: int, centers: list, fontName: str, text_font_size: int,
+                         color=(255, 255, 255), opacity=0.2, scale_multiplier=2):
     empty_watermark_image = Image.new("RGBA", (size_x * scale_multiplier, size_y * scale_multiplier), (0, 0, 0, 0))
     draw = ImageDraw.Draw(empty_watermark_image, "RGBA")
     font_object = ImageFont.truetype(fontName, text_font_size)
@@ -56,7 +56,7 @@ def draw_temp_watermark(text: str, size_x: int, size_y: int, centers: list, font
     return empty_watermark_image
 
 
-def blend_watermark(original: Image, watermark: Image, scale: float, angle:float) -> Image:
+def _blend_watermark(original: Image, watermark: Image, scale: float, angle:float) -> Image:
     copy = original.copy()
     rotated = watermark.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
     rotated.save("rotated.png", "PNG")
@@ -77,11 +77,11 @@ def make_watermark(file_name: str, text: str, options: WatermarkConfig) -> Image
     amount = math.floor(input_img.size[1] * options.WATERMARK_SCALE_IMAGE / options.DENSITY)
     print("Amount: ", amount)
 
-    watermarks_centers = get_watermarks_positions(input_img, options.DENSITY, options.WATERMARK_SCALE_IMAGE)
-    blank_watermark = draw_temp_watermark(text, input_img.size[0], input_img.size[1], watermarks_centers,
-                                          options.FONT_NAME,
-                                          fontSize, options.FONT_COLOR, options.WATERMARK_OPACITY)
-    final = blend_watermark(input_img, blank_watermark, options.WATERMARK_SCALE_IMAGE, options.WATERMARK_ANGLE)
+    watermarks_centers = _get_watermarks_positions(input_img, options.DENSITY, options.WATERMARK_SCALE_IMAGE)
+    blank_watermark = _draw_temp_watermark(text, input_img.size[0], input_img.size[1], watermarks_centers,
+                                           options.FONT_NAME,
+                                           fontSize, options.FONT_COLOR, options.WATERMARK_OPACITY)
+    final = _blend_watermark(input_img, blank_watermark, options.WATERMARK_SCALE_IMAGE, options.WATERMARK_ANGLE)
     new_name = file_name.split(".")[0] + "_" + text + ".png"
     final.save(new_name, "PNG")
     return final

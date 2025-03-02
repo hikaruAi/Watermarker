@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>265</width>
-    <height>340</height>
+    <width>316</width>
+    <height>367</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -45,8 +45,8 @@
    <widget class="QDialogButtonBox" name="button_box">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>300</y>
+      <x>90</x>
+      <y>310</y>
       <width>156</width>
       <height>24</height>
      </rect>
@@ -64,7 +64,7 @@
      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
     </property>
    </widget>
-   <widget class="QLabel" name="opacity_name_label">
+   <widget class="QLabel" name="opacity_label">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -114,12 +114,12 @@
      <double>0.200000000000000</double>
     </property>
    </widget>
-   <widget class="QLineEdit" name="file_lineEdit">
+   <widget class="QLineEdit" name="file_name_edit">
     <property name="geometry">
      <rect>
       <x>105</x>
       <y>9</y>
-      <width>125</width>
+      <width>201</width>
       <height>22</height>
      </rect>
     </property>
@@ -140,7 +140,7 @@
      <string>File Name:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="text_name_label">
+   <widget class="QLabel" name="text_label">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -153,17 +153,17 @@
      <string>Text:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="text_lineEdit">
+   <widget class="QLineEdit" name="text_edit">
     <property name="geometry">
      <rect>
       <x>105</x>
       <y>36</y>
-      <width>125</width>
+      <width>201</width>
       <height>22</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="density_name_label">
+   <widget class="QLabel" name="density_label">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -175,66 +175,6 @@
     <property name="text">
      <string>Density:</string>
     </property>
-   </widget>
-   <widget class="QFrame" name="density_frame">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>80</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Shadow::Raised</enum>
-    </property>
-    <widget class="QSlider" name="density_slider">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>10</y>
-       <width>101</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>200</number>
-     </property>
-     <property name="value">
-      <number>80</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
-     </property>
-     <property name="invertedAppearance">
-      <bool>false</bool>
-     </property>
-     <property name="invertedControls">
-      <bool>false</bool>
-     </property>
-     <property name="tickPosition">
-      <enum>QSlider::TickPosition::TicksAbove</enum>
-     </property>
-     <property name="tickInterval">
-      <number>50</number>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="density_show">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>10</y>
-       <width>31</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
    </widget>
    <widget class="QLabel" name="font_scale_label">
     <property name="geometry">
@@ -284,7 +224,7 @@
      <string>Font:</string>
     </property>
    </widget>
-   <widget class="QFontComboBox" name="font_combo">
+   <widget class="QFontComboBox" name="font_selector">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -332,7 +272,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="color_pick_button">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -358,7 +298,7 @@
      <string>Angle:</string>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
+   <widget class="QSlider" name="angle_slider">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -390,6 +330,60 @@
     </property>
     <property name="tickInterval">
      <number>10</number>
+    </property>
+   </widget>
+   <widget class="QSlider" name="density_slider">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>90</y>
+      <width>101</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>200</number>
+    </property>
+    <property name="value">
+     <number>80</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Orientation::Horizontal</enum>
+    </property>
+    <property name="invertedAppearance">
+     <bool>false</bool>
+    </property>
+    <property name="invertedControls">
+     <bool>false</bool>
+    </property>
+    <property name="tickPosition">
+     <enum>QSlider::TickPosition::TicksAbove</enum>
+    </property>
+    <property name="tickInterval">
+     <number>50</number>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="density_edit">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>90</y>
+      <width>31</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="angle_edit">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>250</y>
+      <width>31</width>
+      <height>22</height>
+     </rect>
     </property>
    </widget>
   </widget>

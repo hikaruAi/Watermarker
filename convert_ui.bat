@@ -1,1 +1,1 @@
-\.venv\Scripts\pyside6-uic.exe options.ui > options_ui.py
+.venv\Scripts\pyside6-uic.exe options.ui > options_ui.py

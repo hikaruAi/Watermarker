@@ -1,11 +1,26 @@
 from watermarker import *
 import json
+from options_ui import *
+
+IS_DEBUG=False
+DEBUG_IMAGE="pexels-uriel-venegas-176524868-15321479.jpg"
+DEBUG_TEXT="SAMPLE TEXT"
+
+class AppUI(QMainWindow):
+    def __init__(self):
+        super(AppUI, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        if IS_DEBUG:
+            self.ui.file_name_edit.setText(DEBUG_IMAGE)
+            self.ui.text_edit.setText(DEBUG_TEXT)
+
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         print("Debug Run")
-        file_name = "pexels-uriel-venegas-176524868-15321479.jpg"
-        textToPut = "SampleText"
+        IS_DEBUG=True
     else:
         try:
             file_name = sys.argv[1]
@@ -13,9 +28,10 @@ if __name__ == '__main__':
         except IndexError:
             print("No input file, quitting")
             quit(0)
-        textToPut = input('Text: ')
-    options = WatermarkConfig()
-    options.WATERMARK_OPACITY = float(input("Opacity 0.01-1.0 :"))
-    options.DENSITY = int(input("Density 10-100 :"))
-    options.FONT_SCALE = int(input("Size 10-100 :"))
-    make_watermark(file_name, textToPut, options)
+
+app = QApplication(sys.argv)
+window = AppUI()
+window.show()
+
+sys.exit(app.exec())
+
