@@ -10,12 +10,14 @@ class WatermarkConfig:
         self.WATERMARK_OPACITY = 0.1
         self.DENSITY = 90
         self.FONT_SCALE = 90
-        self.FONT_NAME = "arial.ttf"
+        self.FONT_PATH = "arial.ttf"
         self.FONT_COLOR = (255, 255, 255)
         self.WATERMARK_ANGLE = -10
         self.DEBUG = True
         self.WATERMARK_SCALE_IMAGE = 2
         self.MIN_FONT_SIZE = 9
+    def __str__(self):
+        return str(self.__dict__)
 
 
 def _get_watermarks_positions(inputImage: Image, number_marks: int, scale_multiplier) -> list:
@@ -42,7 +44,7 @@ def _draw_temp_watermark(text: str, size_x: int, size_y: int, centers: list, fon
                          color=(255, 255, 255), opacity=0.2, scale_multiplier=2):
     empty_watermark_image = Image.new("RGBA", (size_x * scale_multiplier, size_y * scale_multiplier), (0, 0, 0, 0))
     draw = ImageDraw.Draw(empty_watermark_image, "RGBA")
-    font_object = ImageFont.truetype(fontName, text_font_size)
+    font_object = ImageFont.truetype(fontName,size=text_font_size)
     opacity_hex = int(opacity * 255)
     for c in centers:
         if random.choice((True, False, True, True)):
@@ -79,7 +81,7 @@ def make_watermark(file_name: str, text: str, options: WatermarkConfig) -> Image
 
     watermarks_centers = _get_watermarks_positions(input_img, options.DENSITY, options.WATERMARK_SCALE_IMAGE)
     blank_watermark = _draw_temp_watermark(text, input_img.size[0], input_img.size[1], watermarks_centers,
-                                           options.FONT_NAME,
+                                           options.FONT_PATH,
                                            fontSize, options.FONT_COLOR, options.WATERMARK_OPACITY)
     final = _blend_watermark(input_img, blank_watermark, options.WATERMARK_SCALE_IMAGE, options.WATERMARK_ANGLE)
     new_name = file_name.split(".")[0] + "_" + text + ".png"
