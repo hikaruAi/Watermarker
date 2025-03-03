@@ -1,1 +1,3 @@
 pillow==11.1.0
+pySide6==6.8.2.1
+matplotlib~=3.10.1
