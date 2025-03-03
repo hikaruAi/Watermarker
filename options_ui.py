@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QAbstractSpinBox, QApplication, QDialogButtonBox,
-    QDoubleSpinBox, QFontComboBox, QLabel, QLineEdit,
-    QMainWindow, QPushButton, QSizePolicy, QSlider,
-    QSpinBox, QWidget)
+from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialogButtonBox, QFontComboBox,
+    QLabel, QLineEdit, QMainWindow, QPushButton,
+    QSizePolicy, QSlider, QSpinBox, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -55,20 +54,10 @@ class Ui_MainWindow(object):
         self.opacity_label = QLabel(self.centralwidget)
         self.opacity_label.setObjectName(u"opacity_label")
         self.opacity_label.setGeometry(QRect(20, 63, 44, 22))
-        self.opacity_spinbox = QDoubleSpinBox(self.centralwidget)
-        self.opacity_spinbox.setObjectName(u"opacity_spinbox")
-        self.opacity_spinbox.setGeometry(QRect(105, 63, 42, 22))
-        self.opacity_spinbox.setWrapping(True)
-        self.opacity_spinbox.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.PlusMinus)
-        self.opacity_spinbox.setProperty(u"showGroupSeparator", True)
-        self.opacity_spinbox.setDecimals(2)
-        self.opacity_spinbox.setMinimum(0.010000000000000)
-        self.opacity_spinbox.setMaximum(1.000000000000000)
-        self.opacity_spinbox.setStepType(QAbstractSpinBox.StepType.AdaptiveDecimalStepType)
-        self.opacity_spinbox.setValue(0.200000000000000)
         self.file_name_edit = QLineEdit(self.centralwidget)
         self.file_name_edit.setObjectName(u"file_name_edit")
         self.file_name_edit.setGeometry(QRect(105, 9, 201, 22))
+        self.file_name_edit.setAutoFillBackground(False)
         self.file_name_edit.setReadOnly(True)
         self.file_name_label = QLabel(self.centralwidget)
         self.file_name_label.setObjectName(u"file_name_label")
@@ -90,6 +79,7 @@ class Ui_MainWindow(object):
         self.font_scale_spinbox.setGeometry(QRect(110, 130, 51, 22))
         self.font_scale_spinbox.setMinimum(1)
         self.font_scale_spinbox.setMaximum(300)
+        self.font_scale_spinbox.setSingleStep(10)
         self.font_scale_spinbox.setValue(90)
         self.font_scale_spinbox.setDisplayIntegerBase(10)
         self.font_name_label = QLabel(self.centralwidget)
@@ -143,10 +133,26 @@ class Ui_MainWindow(object):
         self.density_slider.setTickInterval(50)
         self.density_edit = QLineEdit(self.centralwidget)
         self.density_edit.setObjectName(u"density_edit")
-        self.density_edit.setGeometry(QRect(210, 90, 31, 22))
+        self.density_edit.setGeometry(QRect(210, 90, 41, 22))
         self.angle_edit = QLineEdit(self.centralwidget)
         self.angle_edit.setObjectName(u"angle_edit")
         self.angle_edit.setGeometry(QRect(260, 250, 31, 22))
+        self.opacity_slider = QSlider(self.centralwidget)
+        self.opacity_slider.setObjectName(u"opacity_slider")
+        self.opacity_slider.setGeometry(QRect(100, 60, 101, 22))
+        self.opacity_slider.setMinimum(1)
+        self.opacity_slider.setMaximum(100)
+        self.opacity_slider.setSingleStep(10)
+        self.opacity_slider.setValue(20)
+        self.opacity_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.opacity_slider.setInvertedAppearance(False)
+        self.opacity_slider.setInvertedControls(False)
+        self.opacity_slider.setTickPosition(QSlider.TickPosition.TicksAbove)
+        self.opacity_slider.setTickInterval(10)
+        self.opacity_edit = QLineEdit(self.centralwidget)
+        self.opacity_edit.setObjectName(u"opacity_edit")
+        self.opacity_edit.setGeometry(QRect(210, 60, 41, 22))
+        self.opacity_edit.setEchoMode(QLineEdit.EchoMode.Normal)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -157,7 +163,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Watermarking", None))
         self.opacity_label.setText(QCoreApplication.translate("MainWindow", u"Opacity:", None))
-        self.opacity_spinbox.setSuffix("")
         self.file_name_label.setText(QCoreApplication.translate("MainWindow", u"File Name:", None))
         self.text_label.setText(QCoreApplication.translate("MainWindow", u"Text:", None))
         self.density_label.setText(QCoreApplication.translate("MainWindow", u"Density:", None))
@@ -170,7 +175,10 @@ class Ui_MainWindow(object):
         self.color_edit.setText(QCoreApplication.translate("MainWindow", u"255,255,255", None))
         self.color_pick_button.setText(QCoreApplication.translate("MainWindow", u"Pick Color", None))
         self.angle_label.setText(QCoreApplication.translate("MainWindow", u"Angle:", None))
+        self.density_edit.setInputMask(QCoreApplication.translate("MainWindow", u"0000", None))
         self.density_edit.setText(QCoreApplication.translate("MainWindow", u"90", None))
         self.angle_edit.setText(QCoreApplication.translate("MainWindow", u"-10", None))
+        self.opacity_edit.setInputMask(QCoreApplication.translate("MainWindow", u"#.##", None))
+        self.opacity_edit.setText(QCoreApplication.translate("MainWindow", u"0.25", None))
     # retranslateUi
 
