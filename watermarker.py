@@ -3,6 +3,7 @@ from PIL import ImageFont
 from PIL import ImageDraw
 import math, sys, random, time
 
+SAVE_TEMP_IMAGES=False
 
 class WatermarkConfig:
 
@@ -54,17 +55,20 @@ def _draw_temp_watermark(text: str, size_x: int, size_y: int, centers: list, fon
             draw.text(c, t, font=font_object, fill=(color[0], color[1], color[2], opacity_hex),
                       font_size=text_font_size)
 
-    empty_watermark_image.save("temp_watermark.png", "PNG")
+    if SAVE_TEMP_IMAGES:
+        empty_watermark_image.save("temp_watermark.png", "PNG")
     return empty_watermark_image
 
 
 def _blend_watermark(original: Image, watermark: Image, scale: float, angle:float) -> Image:
     copy = original.copy()
     rotated = watermark.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
-    rotated.save("rotated.png", "PNG")
+    if SAVE_TEMP_IMAGES:
+        rotated.save("rotated.png", "PNG")
     pad = copy.size[0] * 2 / scale
     croped = rotated.crop((pad, pad, copy.size[0] + pad, copy.size[1] + pad))
-    croped.save("croped.png", "PNG")
+    if SAVE_TEMP_IMAGES:
+        croped.save("croped.png", "PNG")
     return Image.alpha_composite(copy, croped)
 
 
