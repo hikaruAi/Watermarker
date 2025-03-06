@@ -5,12 +5,13 @@ from watermarker import *
 import json
 import matplotlib.font_manager
 from options_ui import *
-from PySide6.QtWidgets import QColorDialog
+from PySide6.QtWidgets import QColorDialog,QMessageBox
 
 
 IS_DEBUG=False
 DEBUG_IMAGE="pexels-uriel-venegas-176524868-15321479.jpg"
 DEBUG_TEXT="SAMPLE TEXT"
+
 
 class AppUI(QMainWindow):
     def __init__(self):
@@ -45,6 +46,11 @@ class AppUI(QMainWindow):
         self.font_ttf_path = ""
         self.ui.font_selector.currentFontChanged.connect(self._on_font_changed)
         self._on_font_changed()
+        #########
+        self.ui.write_temp.checkStateChanged.connect(self._on_write_temp_changed)
+        self._on_write_temp_changed()
+    def _on_write_temp_changed(self):
+        watermarker.SAVE_TEMP_IMAGES=self.ui.write_temp.isChecked()
     def _on_font_changed(self):
         self.ui.text_edit.setFont(self.ui.font_selector.currentFont())
         _family=str(self.ui.font_selector.currentFont().family())
@@ -77,7 +83,9 @@ class AppUI(QMainWindow):
         print("Acepted")
         self._update_all_options()
         print(self.options)
+        message = QMessageBox.information(self, "Proccesing!", "Wait :3")
         watermarker.make_watermark(self.ui.file_name_edit.text(),self.ui.text_edit.text(),options=self.options)
+        message_1 = QMessageBox.information(self, "Finished!", "Success")
 
     def _update_all_options(self):
         self.options.WATERMARK_OPACITY = float(self.ui.opacity_edit.text())
