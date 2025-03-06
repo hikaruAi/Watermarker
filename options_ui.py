@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialogButtonBox, QFontComboBox,
-    QLabel, QLineEdit, QMainWindow, QPushButton,
-    QSizePolicy, QSlider, QSpinBox, QWidget)
+from PySide6.QtWidgets import (QAbstractButton, QApplication, QCheckBox, QDialogButtonBox,
+    QFontComboBox, QLabel, QLineEdit, QMainWindow,
+    QPushButton, QSizePolicy, QSlider, QSpinBox,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -43,7 +44,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setSizePolicy(sizePolicy1)
         self.button_box = QDialogButtonBox(self.centralwidget)
         self.button_box.setObjectName(u"button_box")
-        self.button_box.setGeometry(QRect(90, 310, 156, 24))
+        self.button_box.setGeometry(QRect(90, 330, 156, 24))
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
@@ -68,6 +69,8 @@ class Ui_MainWindow(object):
         self.text_edit = QLineEdit(self.centralwidget)
         self.text_edit.setObjectName(u"text_edit")
         self.text_edit.setGeometry(QRect(105, 36, 201, 22))
+        self.text_edit.setAcceptDrops(False)
+        self.text_edit.setClearButtonEnabled(True)
         self.density_label = QLabel(self.centralwidget)
         self.density_label.setObjectName(u"density_label")
         self.density_label.setGeometry(QRect(20, 90, 42, 22))
@@ -153,6 +156,10 @@ class Ui_MainWindow(object):
         self.opacity_edit.setObjectName(u"opacity_edit")
         self.opacity_edit.setGeometry(QRect(210, 60, 41, 22))
         self.opacity_edit.setEchoMode(QLineEdit.EchoMode.Normal)
+        self.write_temp = QCheckBox(self.centralwidget)
+        self.write_temp.setObjectName(u"write_temp")
+        self.write_temp.setEnabled(True)
+        self.write_temp.setGeometry(QRect(20, 290, 131, 20))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -180,5 +187,6 @@ class Ui_MainWindow(object):
         self.angle_edit.setText(QCoreApplication.translate("MainWindow", u"-10", None))
         self.opacity_edit.setInputMask(QCoreApplication.translate("MainWindow", u"#.##", None))
         self.opacity_edit.setText(QCoreApplication.translate("MainWindow", u"0.25", None))
+        self.write_temp.setText(QCoreApplication.translate("MainWindow", u"Write Temp Pictures", None))
     # retranslateUi
 
